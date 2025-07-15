@@ -10,6 +10,7 @@ import time  # For spinner timing
 import urllib.parse  # For parsing URLs
 import webbrowser  # For opening links
 import socket  # For port check
+import winreg  # For registry access
 
 
 # List of possible RTSP URLs - customize this with your ROV's known addresses/ports
@@ -29,7 +30,15 @@ VLC_PATHS = [
 ]
 
 def get_vlc_path():
-    """Check for VLC executable in common paths."""
+    """Check for VLC executable in common paths and registry."""
+    try:
+        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r'SOFTWARE\VideoLAN\VLC') as key:
+            path, _ = winreg.QueryValueEx(key, 'InstallDir')
+            vlc_exe = os.path.join(path, 'vlc.exe')
+            if os.path.exists(vlc_exe):
+                return vlc_exe
+    except Exception:
+        pass
     for path in VLC_PATHS:
         if os.path.exists(path):
             return path
