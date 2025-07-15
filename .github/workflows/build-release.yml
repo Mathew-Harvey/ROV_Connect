@@ -53,26 +53,14 @@ jobs:
         if gh release view ${{ github.ref_name }} >/dev/null 2>&1; then
           echo "Release ${{ github.ref_name }} already exists, skipping creation"
         else
+          notes_file="release-notes.md"
+          echo -e "## ROV Auto-Connect v${{ github.ref_name }}\n\n### What's New\n- Automated ROV stream discovery and connection\n- Built-in VLC integration for video streaming\n- Modern, user-friendly interface\n\n### Installation\n1. Download the executable from this release\n2. Ensure VLC Media Player is installed on your system\n3. Run the executable and click \"Connect to ROV Stream\"\n\n### Requirements\n- Windows 10/11\n- VLC Media Player (download from https://www.videolan.org/vlc/)\n- Network connection to ROV" > "$notes_file"
           gh release create ${{ github.ref_name }} \
             --title "ROV Auto-Connect v${{ github.ref_name }}" \
-            --notes "## ROV Auto-Connect v${{ github.ref_name }}
-
-### What's New
-- Automated ROV stream discovery and connection
-- Built-in VLC integration for video streaming
-- Modern, user-friendly interface
-
-### Installation
-1. Download the executable from this release
-2. Ensure VLC Media Player is installed on your system
-3. Run the executable and click \"Connect to ROV Stream\"
-
-### Requirements
-- Windows 10/11
-- VLC Media Player (download from https://www.videolan.org/vlc/)
-- Network connection to ROV" \
+            --notes-file "$notes_file" \
             --draft=false \
             --prerelease=false
+          rm "$notes_file"
         fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
