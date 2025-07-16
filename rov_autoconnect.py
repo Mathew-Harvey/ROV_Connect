@@ -12,14 +12,14 @@ import webbrowser  # For opening links
 import socket  # For port check
 import winreg  # For registry access
 
-
-# List of possible RTSP URLs - customize this with your ROV's known addresses/ports
 # Example: If ROV might be on different subnets or IPs, add them here
 POSSIBLE_RTSP_URLS = [
-    'rtsp://192.168.0.1:554/stream',
-    'rtsp://192.168.0.100:554/stream',
-    'rtsp://192.168.1.1:554/stream',
-    'rtsp://192.168.1.100:554/stream',
+    'rtsp://10.78.0.1:50000/a0_0',
+    'rtsp://10.78.0.1:50000/dt',
+    'rtsp://10.78.0.1:50000/av0_0',
+    'rtsp://10.78.0.1:8554/a0_0',
+    'rtsp://10.78.0.1:8554/dt',
+    'rtsp://10.78.0.1:8554/av0_0',
     # Add more as needed, e.g., 'rtsp://user:pass@192.168.0.2:554/stream' for auth
 ]
 
